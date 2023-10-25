@@ -62,3 +62,5 @@ RUN \
     python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     python3 -m pip install --no-cache-dir -f dist 'chatglm-cpp[api]' && \
     rm -rf dist
+
+CMD ["uvicorn", "chatglm_cpp.openai_api:app", "--host", "0.0.0.0", "--port", "8000"]
