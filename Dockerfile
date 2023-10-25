@@ -55,6 +55,8 @@ COPY --from=build /app /app
 
 ADD examples examples
 
+ENV MODEL=/app/default_models/chatglm2-ggml-q4_1.bin
+
 RUN \
     python3 -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip && \
     python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
