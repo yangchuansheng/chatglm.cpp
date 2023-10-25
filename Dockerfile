@@ -12,7 +12,7 @@ RUN \
         -e "s/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g" -i /etc/apt/sources.list && \
     apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -yq --no-install-recommends \
-        gcc g++ make python3-dev python3-pip python3-venv && \
+        gcc g++ make python3-dev python3-pip python3-venv wget && \
     rm -rf /var/lib/apt/lists/*
 
 # pip
@@ -20,6 +20,9 @@ RUN \
     python3 -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip && \
     python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     python3 -m pip install --no-cache-dir build cmake
+
+RUN mkdir -p /app/default_models
+RUN wget https://huggingface.co/Xorbits/chatglm2-6B-GGML/resolve/main/chatglm2-ggml-q4_1.bin -O /app/default_models/chatglm2-ggml-q4_1.bin
 
 ARG PATH=${PATH}:/usr/local/bin
 
@@ -48,6 +51,7 @@ RUN \
 
 COPY --from=build /chatglm.cpp/build/bin/main /chatglm.cpp/build/bin/main
 COPY --from=build /chatglm.cpp/dist/ /chatglm.cpp/dist/
+COPY --from=build /app /app
 
 ADD examples examples
 
