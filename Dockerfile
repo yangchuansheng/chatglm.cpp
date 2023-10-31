@@ -22,7 +22,7 @@ RUN \
     python3 -m pip install --no-cache-dir build cmake
 
 RUN mkdir -p /app/default_models
-RUN wget https://huggingface.co/Xorbits/chatglm2-6B-GGML/resolve/main/chatglm2-ggml-q4_1.bin -O /app/default_models/chatglm2-ggml-q4_1.bin
+RUN wget https://huggingface.co/Xorbits/chatglm2-6B-GGML/resolve/main/chatglm2-ggml-q5_1.bin -O /app/default_models/chatglm2-ggml-q5_1.bin
 
 ARG PATH=${PATH}:/usr/local/bin
 
@@ -55,7 +55,7 @@ COPY --from=build /app /app
 
 ADD examples examples
 
-ENV MODEL=/app/default_models/chatglm2-ggml-q4_1.bin
+ENV MODEL=/app/default_models/chatglm2-ggml-q5_1.bin
 
 RUN \
     python3 -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip && \
